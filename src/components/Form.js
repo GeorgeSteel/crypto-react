@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Crypto from './Crypto';
 
 export default class Form extends Component {
 
@@ -15,6 +16,7 @@ export default class Form extends Component {
                             crypto: resp.data.Data
                         });
                     })
+                    .catch(err => console.error(err));
     }
 
   render() {
@@ -33,12 +35,18 @@ export default class Form extends Component {
             </div>
         
             <div className="row">
-            <div>
-                <label>Elige tu Criptomoneda</label>
-                <select className="u-full-width">
-                    <option value="">Elige tu moneda</option>
-                </select>
-            </div>
+                <div>
+                    <label>Elige tu Criptomoneda</label>
+                    <select className="u-full-width">
+                        <option defaultValue>Elige tu moneda</option>
+                        { Object.keys(this.state.crypto).map(key => (
+                            <Crypto 
+                                key={ key }
+                                crypto={ this.state.crypto[key] }
+                            />
+                        )) }
+                    </select>
+                </div>
             </div>
             <input className="button-primary u-full-width" type="submit" value="Cotizar" />
         </form>
